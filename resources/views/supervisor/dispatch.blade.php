@@ -1,168 +1,312 @@
-@extends('layouts.supervisor-dashboard')
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta content="Admin Dashboard" name="description" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-@section('styles')
-   <style>
+        <title>{{ config('app.name', 'Ambulance | Dispatch') }}</title>
 
-   </style>
-@endsection
+        <!-- DataTables -->
+        <link href="{{ asset('vendor/assets/plugins/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('vendor/assets/plugins/datatables/responsive.bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('vendor/assets/plugins/datatables/dataTables.bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
 
-@section('user_name')
-   {{ $user->name }} &nbsp;<i class="fa fa-caret-down"></i>
-@endsection
 
-@section('profile-pic-sm')
-    {{ $user->photo ? $user->photo->path : 'vendor/assets/images/users/avatar-1.jpg' }}
-@endsection
+        <link href="{{ asset('vendor/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('vendor/assets/css/icons.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('vendor/assets/css/style.css') }}" rel="stylesheet" type="text/css">
 
-@section('profile-pic-lg')
-    {{ $user->photo !== null ? $user->photo->path : 'vendor/assets/images/users/avatar-1.jpg' }}
-@endsection
+        <!-- Scripts -->
+        @livewireStyles
+    </head>
 
-@section('alerts')
 
-@if (count($errors) > 0)
-    <div class="alert alert-danger alert-dismissible fade in">
-        <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">×</span>
-        </button>
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>
-                <strong>{{$error}}</strong>
-            </li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+    <body class="fixed-left">
 
-@endsection
+        <!-- Begin page -->
+        <div id="wrapper">
 
-@section('table_name')
-    <em> Dispatch Ambulance </em>
-@endsection
+            <!-- Top Bar Start -->
+            <div class="topbar">
+                <!-- LOGO -->
+                <div class="topbar-left">
+                    <div class="text-center">
+                        <a href="{{ route('supervisor.index') }}" class="logo">HOME | DASHBOARD</a>
+                    </div>
+                </div>
+                <!-- Button mobile view to collapse sidebar menu -->
+                <div class="navbar navbar-default" role="navigation">
+                    <div class="container">
+                        <div class="">
+                            <div class="pull-left">
+                                <button type="button" class="button-menu-mobile open-left waves-effect waves-light">
+                                    <i class="ion-navicon"></i>
+                                </button>
+                                <span class="clearfix"></span>
+                            </div>
+                            <form class="navbar-form pull-left" role="search" method="POST">
+                                <div class="form-group">
+                                    <input type="text" class="form-control search-bar" placeholder="Search...">
+                                </div>
+                                <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
+                            </form>
 
-@section('table_content')
-<section>
-    <form class="form-horizontal dispatch-form" method="POST" action=" {{ route('dispatch-ambulance.store') }} ">
-        @csrf
-        <div class="form-section">
-            <div class="form-group">
-                <label class="col-md-2 control-label">Caller Full Names</label>
-                <div class="col-md-10">
-                    <input type="text" class="form-control" name="name" placeholder="Caller Full Names" value="{{ old('name') }}" required>
-                    <span class="help-block"><small>Enter Caller's Full Three Names</small></span>
+                            <ul class="nav navbar-nav navbar-right pull-right">
+                                <li class="dropdown hidden-xs">
+                                    <a href="#" data-bs-target="#" class="dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-expanded="true">
+                                        <i class="ti-bell"></i> <span class="badge badge-xs badge-danger">@yield('number_notifications')</span>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-lg">
+                                        <li class="text-center notifi-title">Notification <span class="badge badge-xs badge-success">3</span></li>
+                                        <li class="list-group">
+                                           <!-- list item-->
+                                           <a href="javascript:void(0);" class="list-group-item">
+                                              <div class="media">
+                                                 <div class="media-heading">Your order is placed</div>
+                                                 <p class="m-0">
+                                                   <small>Dummy text of the printing and typesetting industry.</small>
+                                                 </p>
+                                              </div>
+                                           </a>
+
+                                           <!-- last list item -->
+                                            <a href="javascript:void(0);" class="list-group-item">
+                                              <small class="text-primary">See all notifications</small>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="hidden-xs">
+                                    <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="ti-fullscreen"></i></a>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="" class="dropdown-toggle profile waves-effect waves-light" data-bs-toggle="dropdown" aria-expanded="true"><img src="{{ $user->photo ? $user->photo->path : 'vendor/assets/images/users/avatar-1.jpg' }}" alt="user-img" class="img-circle"> </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="javascript:void(0)"> Profile</a></li>
+                                        <li><a href="javascript:void(0)"><span class="badge badge-success pull-right">5</span> Settings </a></li>
+                                        <li><a href="javascript:void(0)"> Lock screen</a></li>
+                                        <li class="divider"></li>
+                                        <li>
+                                            <a href="{{ route('logout') }}"
+                                                onclick="event.preventDefault();
+                                                                document.getElementById('logout-form').submit();">
+                                                    {{ __('Logout') }}
+                                            </a>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                @csrf
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--/.nav-collapse -->
+                    </div>
                 </div>
             </div>
+            <!-- Top Bar End -->
 
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="caller_phone">Caller's Phone Number</label>
-                <div class="col-md-10">
-                    <input type="phone" id="caller_phone" name="caller_phone" class="form-control" placeholder="Caller's Phone" value="{{ old('caller_phone') }}" required>
-                </div>
+
+            <!-- ========== Left Sidebar Start ========== -->
+
+            <div class="left side-menu">
+                <div class="sidebar-inner slimscrollleft">
+                    <div class="user-details">
+                        <div class="text-center">
+                            <img src="{{ $user->photo !== null ? $user->photo->path : 'vendor/assets/images/users/avatar-1.jpg' }}" alt="" class="img-circle" height="50">
+                        </div>
+                        <div class="user-info">
+                            <div class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{ $user->name }} &nbsp;<i class="fa fa-caret-down"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="javascript:void(0)"> Profile</a></li>
+                                    <li><a href="javascript:void(0)"> Settings</a></li>
+                                    <li><a href="javascript:void(0)"> Lock screen</a></li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                            document.getElementById('logout-form').submit();">
+                                                {{ __('Logout') }}
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <p class="text-muted m-0"><i class="fa fa-dot-circle-o text-success"></i> Online </p>
+                        </div>
+                    </div>
+                    <!--- Divider -->
+                    <div id="sidebar-menu">
+                        <ul>
+                            <li>
+                                <a href="{{ route('supervisor.index') }}" class="waves-effect"><i class="ti-home"></i><span> Dashboard </span></a>
+                            </li>
+
+
+                            <li class="has_sub">
+                                <a href="{{ route('users.index') }}" class="waves-effect"><i class="ti-user"></i> <span> Users </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="{{ route('users.index') }}">All Users</a></li>
+                                    <li><a href="{{ route('users.create') }}">Create User</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('media.index') }}" class="waves-effect"><i class="ti-video-clapper"></i><span> Media </span></a>
+                            </li>
+
+                            <li class="has_sub">
+                                <a href="{{ route('location.index') }}" class="waves-effect"><i class="ti-location-pin"></i> <span> Locations </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="{{ route('location.index') }}">All Locations</a></li>
+                                    <li><a href="{{ route('location.create') }}">Add A Location</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="has_sub">
+                                <a href="{{ route('ambulance.index') }}" class="waves-effect"><i class="fa fa-ambulance"></i> <span> Ambulances </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="{{ route('ambulance.index') }}">All Ambulances</a></li>
+                                    <li><a href="{{ route('ambulance.create') }}">Create Ambulance</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><i class="ti-map-alt"></i><span> Maps </span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="maps-google.html"> Google Map</a></li>
+                                    <li><a href="maps-vector.html"> Vector Map</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('dispatch-ambulance.index') }}" class="waves-effect"><i class="ti-headphone-alt"></i><span> Dispatch Ambulance </span></a>
+                            </li>
+
+                            <li>
+                                <a href="calendar.html" class="waves-effect"><i class="ti-calendar"></i><span> Calendar <span class="badge badge-primary pull-right">NEW</span></span></a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+                </div> <!-- end sidebarinner -->
             </div>
+            <!-- Left Sidebar End -->
 
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="kin_name">Next Of Kin's Names </label>
-                <div class="col-md-10">
-                    <input type="text" id="kin_name" name="kin_name" class="form-control" placeholder="Next Of Kin's Names" value="{{ old('kin_name') }}" required>
-                    <span class="help-block"><small>Enter Next Of Kin's Names</small></span>
-                </div>
-            </div>
-        </div>
+            <!-- Start right Content here -->
 
-        <div class="form-section">
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="victim_name">Victim's Names </label>
-                <div class="col-md-10">
-                    <input type="text" id="victim_name" name="victim_name" class="form-control" placeholder="Victim's Names" value="{{ old('victim_name') }}" required>
-                    <span class="help-block"><small>Enter Victim's Names</small></span>
-                </div>
-            </div>
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="page-header-title">
+                                    <h4 class="pull-left page-title">Dashboard</h4>
+                                    <ol class="breadcrumb pull-right">
+                                        <li><a href=" {{ route('supervisor.index') }} ">Dispatch</a></li>
+                                        <li class="active">Dashboard</li>
+                                    </ol>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
 
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Victim's Gender</label>
-                <div class="col-sm-10">
-                    <select class="form-control" name="victim_gender" required>
-                        <option value="M"> Male </option>
-                        <option value="F"> Female </option>
-                        <option value="Other"> Other/Unknown </option>
-                    </select>
-                </div>
-            </div>
+                        <div class="row mb-md-1">
+                            @yield('dashboard_panels')
+                        </div>
 
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Preferred Hospital</label>
-                <div class="col-sm-10">
-                    <select class="form-control" name="role_id" required>
-                        @foreach ($locations as $location)
-                            <option value="{{ $location->id }}"> {{ $location->hospital }} </option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-section">
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Emergency Description</label>
-                <div class="col-sm-10">
-                    <textarea name="emergency_details" class="form-control" rows="5" placeholder="Enter Emergency Details Here" required></textarea>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Assign Ambulance</label>
-                <div class="col-sm-10">
-                    <select class="form-control" name="role_id" required>
-                        @foreach ($ambulance_array as $ambulance)
-                            <option value="{{ $ambulance->id }}">
-                                {{ $ambulance->reg_no }} With Driver:
-                                @if ($driver = $ambulance->driver)
-                                {{ $driver['name'] }}
-                                @else
-                                    {{ "No Driver Assigned" }}
+                        <div class="row m-t-10">
+                            <div class="col-md-12">
+                                @if (count($errors) > 0)
+                                    <div class="alert alert-danger alert-dismissible fade in">
+                                        <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                            <li>
+                                                <strong>{{$error}}</strong>
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
                                 @endif
-                            </option>
-                        @endforeach
-                    </select>
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title"><em> Dispatch Ambulance </em></h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <section>
+                                            @livewire('dispatch-ambulance', ['locations' => $locations, 'ambulance_array' => $ambulance_array])
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Row -->
+
+
+                    </div>
+                    <!-- container -->
+
                 </div>
-            </div>
+                <!-- content -->
 
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="kin_phone">Next Of Kin's Phone Number</label>
-                <div class="col-md-10">
-                    <input type="phone" id="kin_phone" name="kin_phone" class="form-control" placeholder="Kin's Phone" value="{{ old('kin_phone') }}" required>
-                </div>
+                <footer class="footer">
+                    2021 © Dispatch.io
+                </footer>
+
             </div>
+            <!-- End Right content here -->
+
         </div>
+        <!-- END wrapper -->
 
-        <div class="form-navigation">
-            <div class="form-group">
-                <ul class="pager">
-                    <div class="col-md-10">
-                        <li class="previous disabled">
-                            <a href=""><i class="fa fa-long-arrow-left"></i> Previous</a>
-                        </li>
-                    </div>
+        <!-- jQuery  -->
+        <script src="{{ asset('vendor/assets/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('vendor/assets/js/jquery.min.js') }}"></script>
+        <script src="{{ asset('vendor/assets/js/jquery.slimscroll.js') }}"></script>
+        <script src="{{ asset('vendor/assets/js/modernizr.min.js') }}"></script>
+        <script src="{{ asset('vendor/assets/js/detect.js') }}"></script>
+        <script src="{{ asset('vendor/assets/js/fastclick.js') }}"></script>
+        <script src="{{ asset('vendor/assets/js/jquery.blockUI.js') }}"></script>
+        <script src="{{ asset('vendor/assets/js/waves.js') }}"></script>
+        <script src="{{ asset('vendor/assets/js/wow.min.js') }}"></script>
+        <script src="{{ asset('vendor/assets/js/jquery.nicescroll.js') }}"></script>
+        <script src="{{ asset('vendor/assets/js/jquery.scrollTo.min.js') }}"></script>
+        <script src="{{ asset('vendor/assets/plugins/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
 
-                    <div class="col-md-2">
-                        <li class="next">
-                            <a href="">Next <i class="fa fa-long-arrow-right"></i></a>
-                        </li>
-                    </div>
+        <!-- Datatables-->
+        <script src="{{ asset('vendor/assets/plugins/datatables/dataTables.min.js') }}"></script>
+        <script src="{{ asset('vendor/assets/pages/datatables.init.js') }}"></script>
 
-                    <div class="col-md-12 m-t-10">
-                        <li class="">
-                            <button type="submit" class="btn btn-primary btn-block waves-effect waves-light clear:left">Dispatch Ambulance</button>
-                        </li>
-                    </div>
-                </ul>
-            </div>
-        </div>
+        <script src="{{ asset('vendor/assets/pages/dashborad.js') }}"></script>
 
-    </form>
-</section>
+        <script src="{{ asset('vendor/assets/js/app.js') }}"></script>
+        <script src="{{ asset('js/app.js') }}"></script>
 
-@endsection
+        @livewireScripts
+    </body>
+</html>
+
+
+
+
+
+
+
 
 

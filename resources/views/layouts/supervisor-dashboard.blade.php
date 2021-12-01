@@ -21,7 +21,7 @@
         <link href="{{ asset('vendor/assets/css/style.css') }}" rel="stylesheet" type="text/css">
 
         <!-- Scripts -->
-
+        @livewireStyles
     </head>
 
 
@@ -208,7 +208,6 @@
                 <!-- Start content -->
                 <div class="content">
                     <div class="container">
-
                         <!-- Page-Title -->
                         <div class="row">
                             <div class="col-sm-12">
@@ -282,7 +281,7 @@
         <script src="{{ asset('vendor/assets/js/app.js') }}"></script>
         <script src="{{ asset('js/app.js') }}"></script>
 
-
+        @livewireScripts
     </body>
 </html>
 
