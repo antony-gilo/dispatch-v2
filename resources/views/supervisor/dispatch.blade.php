@@ -10,11 +10,6 @@
 
         <title>{{ config('app.name', 'Ambulance | Dispatch') }}</title>
 
-        <!-- DataTables -->
-        <link href="{{ asset('vendor/assets/plugins/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('vendor/assets/plugins/datatables/responsive.bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('vendor/assets/plugins/datatables/dataTables.bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
-
 
         <link href="{{ asset('vendor/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('vendor/assets/css/icons.css') }}" rel="stylesheet" type="text/css">
