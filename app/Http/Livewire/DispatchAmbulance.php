@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Location;
 use App\Models\Ambulance;
 use App\Models\Dispatch;
+use Illuminate\Support\Facades\Session;
 
 class DispatchAmbulance extends Component
 {
@@ -91,29 +92,87 @@ class DispatchAmbulance extends Component
             ]);
         }
 
-        $dispatch_info = [
-            'name' => $this->name,
-            'caller_phone' => $this->caller_phone,
-            'kin_name' => $this->kin_name,
-            'kin_phone' => $this->kin_phone,
-            'victim_name' => $this->victim_name,
-            'victim_gender' => $this->victim_gender,
-            'location_id' => $this->location_id,
-            'ambulance_id' => $this->assigned_ambulance,
-            'emergency_details' => $this->emergency_details,
-        ];
+        if (session('driver_name') && session('preferred_hospital')) {
+            Session::flush();
 
-        $dispatched_ambulance = $dispatch_info['ambulance_id'];
+            $dispatch_info = [
+                'name' => $this->name,
+                'caller_phone' => $this->caller_phone,
+                'kin_name' => $this->kin_name,
+                'kin_phone' => $this->kin_phone,
+                'victim_name' => $this->victim_name,
+                'victim_gender' => $this->victim_gender,
+                'location_id' => $this->location_id,
+                'ambulance_id' => $this->assigned_ambulance,
+                'emergency_details' => $this->emergency_details,
+            ];
 
-        $ambulance_status = Ambulance::findOrFail($dispatched_ambulance);
-        $ambulance_status->update(['status' => 1]);
+            $dispatched_ambulance = $dispatch_info['ambulance_id'];
 
-        $insert = Dispatch::create($dispatch_info);
+            $ambulance_status = Ambulance::findOrFail($dispatched_ambulance);
+            $ambulance_status->update(['status' => 1]);
 
-        if ($insert) {
+            $insert = Dispatch::create($dispatch_info);
 
-            $this->reset();
-            $this->currentStep == 1;
+            if ($insert) {
+                $driver = $ambulance_status->driver;
+                $driver_email = $driver['email'];
+                $driver_name = $driver['name'];
+                $victim_name = $this->victim_name;
+                $caller_phone = $this->caller_phone;
+                $caller_name = $this->name;
+                $location = Location::findOrFail($this->location_id);
+                $preferred_hospital = $location->location;
+
+                Session::put('driver_email', $driver_email);
+                Session::put('driver_name', $driver_name);
+                Session::put('victim_name', $victim_name);
+                Session::put('preferred_hospital', $preferred_hospital);
+                Session::put('caller_name', $caller_name);
+                Session::put('caller_phone', $caller_phone);
+
+                return redirect()->route('dispatch-notification');
+            }
+        } else {
+
+            $dispatch_info = [
+                'name' => $this->name,
+                'caller_phone' => $this->caller_phone,
+                'kin_name' => $this->kin_name,
+                'kin_phone' => $this->kin_phone,
+                'victim_name' => $this->victim_name,
+                'victim_gender' => $this->victim_gender,
+                'location_id' => $this->location_id,
+                'ambulance_id' => $this->assigned_ambulance,
+                'emergency_details' => $this->emergency_details,
+            ];
+
+            $dispatched_ambulance = $dispatch_info['ambulance_id'];
+
+            $ambulance_status = Ambulance::findOrFail($dispatched_ambulance);
+            $ambulance_status->update(['status' => 1]);
+
+            $insert = Dispatch::create($dispatch_info);
+
+            if ($insert) {
+                $driver = $ambulance_status->driver;
+                $driver_email = $driver['email'];
+                $driver_name = $driver['name'];
+                $victim_name = $this->victim_name;
+                $caller_phone = $this->caller_phone;
+                $caller_name = $this->name;
+                $location = Location::findOrFail($this->location_id);
+                $preferred_hospital = $location->location;
+
+                Session::put('driver_email', $driver_email);
+                Session::put('driver_name', $driver_name);
+                Session::put('victim_name', $victim_name);
+                Session::put('preferred_hospital', $preferred_hospital);
+                Session::put('caller_name', $caller_name);
+                Session::put('caller_phone', $caller_phone);
+
+                return redirect()->route('dispatch-notification');
+            }
         }
     }
 }
