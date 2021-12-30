@@ -20,4 +20,9 @@ class Dispatch extends Model
         'ambulance_id',
         'emergency_details',
     ];
+
+    public function hospitals()
+    {
+        return $this->hasMany(Location::class);
+    }
 }

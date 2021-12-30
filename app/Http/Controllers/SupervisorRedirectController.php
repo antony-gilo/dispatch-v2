@@ -9,6 +9,7 @@ use App\Models\Dispatch;
 use App\Models\Location;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class SupervisorRedirectController extends Controller
 {
@@ -33,7 +34,18 @@ class SupervisorRedirectController extends Controller
         $monthly_dispatch = Dispatch::whereMonth('created_at', '=', $current_month)->get()->count();
 
         $locations = Location::all();
+        $common_location = DB::table('dispatches')
+            ->select('location_id', DB::raw('COUNT(location_id) as count'))
+            ->groupBy('location_id')
+            ->orderBy('count')
+            ->get();
 
-        return view('supervisor.index', compact('users', 'user', 'ambulances', 'dispatches', 'monthly_dispatch', 'stand_by', 'on_duty', 'drivers', 'dispatchers', 'locations'));
+        foreach ($common_location as $location) {
+            $hospital_id = $location->location_id;
+        }
+
+        $common_hospital = Location::findOrFail($hospital_id)->hospital;
+
+        return view('supervisor.index', compact('users', 'user', 'ambulances', 'dispatches', 'monthly_dispatch', 'stand_by', 'on_duty', 'drivers', 'dispatchers', 'locations', 'common_hospital'));
     }
 }

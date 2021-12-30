@@ -262,7 +262,8 @@
                                 </div>
                                 <div class="panel-body">
                                     <h3 class=""><b>{{ $locations->count() }}</b></h3>
-                                    <p class="text-muted"><b>31%</b> From Last 1 month</p>
+                                    <p class="text-muted">&nbsp;</p>
+                                    <p class="text-muted"><b>{{ $common_hospital }}</b> Is The Most Preffered By Casualties</p>
                                 </div>
                             </div>
                         </div>
@@ -271,11 +272,11 @@
                             <div class="col-md-12">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">
-                                        <h3 class="panel-title"><em> Dispatch Ambulance </em></h3>
+                                        <h3 class="panel-title"><em> System Users </em></h3>
                                     </div>
                                     <div class="panel-body">
                                         <section>
-                                            hello
+
                                         </section>
                                     </div>
                                 </div>
