@@ -22,6 +22,7 @@ class SupervisorRedirectController extends Controller
     {
         $users = User::all();
         $user = Auth::user();
+
         $drivers = User::where('role_id', 3)->count();
         $dispatchers = User::where('role_id', [1, 2])->count();
 
@@ -29,7 +30,8 @@ class SupervisorRedirectController extends Controller
         $on_duty = $ambulances->where('status', 1)->count();
         $stand_by = $ambulances->where('status', 0)->count();
 
-        $dispatches = Dispatch::all()->count();
+        $dispatches = Dispatch::all();
+        $dispatches_count = Dispatch::all()->count();
         $current_month = Carbon::now()->month();
         $monthly_dispatch = Dispatch::whereMonth('created_at', '=', $current_month)->get()->count();
 
@@ -46,6 +48,6 @@ class SupervisorRedirectController extends Controller
 
         $common_hospital = Location::findOrFail($hospital_id)->hospital;
 
-        return view('supervisor.index', compact('users', 'user', 'ambulances', 'dispatches', 'monthly_dispatch', 'stand_by', 'on_duty', 'drivers', 'dispatchers', 'locations', 'common_hospital'));
+        return view('supervisor.index', compact('users', 'user', 'ambulances', 'dispatches', 'dispatches_count', 'monthly_dispatch', 'stand_by', 'on_duty', 'drivers', 'dispatchers', 'locations', 'common_hospital'));
     }
 }

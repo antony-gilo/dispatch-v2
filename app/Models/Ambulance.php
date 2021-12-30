@@ -40,4 +40,9 @@ class Ambulance extends Model
     {
         $this->attributes['reg_no'] = substr(Str::upper($value), 0, 3) . " " . substr(Str::upper($value), 3);
     }
+
+    public function dispatches()
+    {
+        return $this->hasMany(Dispatch::class);
+    }
 }

@@ -10,6 +10,10 @@
 
         <title>{{ config('app.name', 'Ambulance | Dispatch') }}</title>
 
+        <!-- DataTables -->
+        <link href="{{ asset('vendor/assets/plugins/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('vendor/assets/plugins/datatables/responsive.bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('vendor/assets/plugins/datatables/dataTables.bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
 
         <link href="{{ asset('vendor/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('vendor/assets/css/icons.css') }}" rel="stylesheet" type="text/css">
@@ -235,9 +239,9 @@
                                     <h4 class="panel-title">Number Of Dispatches</h4>
                                 </div>
                                 <div class="panel-body">
-                                    <h3 class=""><b>{{ $dispatches }}</b></h3>
+                                    <h3 class=""><b>{{ $dispatches_count }}</b></h3>
                                     <p class="text-muted">&nbsp;</p>
-                                    <p class="text-muted"><b>{{ $monthly_dispatch / $dispatches * 100 }}%</b> Of Dispatches Made This Month</p>
+                                    <p class="text-muted"><b>{{ $monthly_dispatch / $dispatches_count * 100 }}%</b> Of Dispatches Made This Month</p>
                                 </div>
                             </div>
                         </div>
@@ -255,7 +259,7 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-6 col-lg-3">
+                        <div class="col-sm-6 col-lg-3 mb-5">
                             <div class="panel panel-primary text-center">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">Registered Hospitals</h4>
@@ -272,12 +276,85 @@
                             <div class="col-md-12">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">
-                                        <h3 class="panel-title"><em> System Users </em></h3>
+                                        <h3 class="panel-title">REGISTERED SYSTEM USERS</h3>
                                     </div>
                                     <div class="panel-body">
-                                        <section>
+                                        <table id="datatable" class="table table-striped table-bordered">
+                                            <caption><small style="color: #5966f7;">&nbsp;REGISTERED SYSTEM USERS AND THEIR ROLES</small></caption>
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Role</th>
+                                                    <th>Email</th>
+                                                    <th>Date Enrolled</th>
+                                                </tr>
+                                            </thead>
 
-                                        </section>
+
+                                            <tbody>
+
+                                                @foreach ($users as $user)
+                                                    <tr>
+                                                        <td>{{ $user->name }}</td>
+                                                        <td>{{ $user->role->role }}</td>
+                                                        <td>{{ $user->email }}</td>
+                                                        <td>{{ $user->created_at->diffForHumans() }}</td>
+                                                    </tr>
+                                                @endforeach
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Row -->
+
+                        <div class="row m-t-10">
+                            <div class="col-md-12">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">SYSTEM DISPATCHES MADE</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <table id="datatable-buttons" class="table table-striped table-bordered">
+                                            <caption><small style="color: #5966f7;">&nbsp;REGISTERED SYSTEM USERS AND THEIR ROLES</small></caption>
+                                            <thead>
+                                                <tr>
+                                                    <th>Caller Name</th>
+                                                    <th>Caller's No.</th>
+                                                    <th>Assigned Ambulance</th>
+                                                    <th>Driver In Charge</th>
+                                                    <th>Hospital Taken</th>
+                                                    <th>Dispatch Date</th>
+                                                </tr>
+                                            </thead>
+
+
+                                            <tbody>
+
+                                                @foreach ($dispatches as $dispatch)
+
+                                                    <tr>
+                                                        <td>{{ $dispatch->name }}</td>
+                                                        <td>{{ $dispatch->caller_phone }}</td>
+                                                        <td>
+                                                            @if ($assignedAmbulance = $dispatch->ambulance)
+                                                                {{ ($assignedAmbulance['reg_no']) }}
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if ($assignedAmbulance = $dispatch->ambulance)
+                                                                {{ $assignedAmbulance->driver->name }}
+                                                            @endif
+                                                        </td>
+                                                        <td>{{ $dispatch->location->hospital }}</td>
+                                                        <td style="text-align:center"> {{ $dispatch->created_at->toDateString() }}</td>
+                                                    </tr>
+                                                @endforeach
+
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>

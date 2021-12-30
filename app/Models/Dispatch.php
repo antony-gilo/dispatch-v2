@@ -25,4 +25,14 @@ class Dispatch extends Model
     {
         return $this->hasMany(Location::class);
     }
+
+    public function ambulance()
+    {
+        return $this->belongsTo(Ambulance::class);
+    }
+
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
+    }
 }
