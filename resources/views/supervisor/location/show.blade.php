@@ -12,6 +12,10 @@
     {{ $user->photo !== null ? $user->photo->path : 'vendor/assets/images/users/avatar-1.jpg' }}
 @endsection
 
+@section('page_name')
+    See Location Map
+@endsection
+
 @section('alerts')
 
 @if (count($errors) > 0)

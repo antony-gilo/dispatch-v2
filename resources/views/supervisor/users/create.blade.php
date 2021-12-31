@@ -12,6 +12,10 @@
     {{ $user->photo !== null ? $user->photo->path : 'vendor/assets/images/users/avatar-1.jpg' }}
 @endsection
 
+@section('page_name')
+    Create User
+@endsection
+
 @section('alerts')
 
 @if (count($errors) > 0)
@@ -36,7 +40,7 @@
 @endsection
 
 @section('table_content')
-<form class="form-horizontal" method="POST" action=" {{ route('users.store') }} " enctype="multipart/form-data">
+<form class="form-horizontal" method="POST" action=" {{ route('supervisor.users.store') }} " enctype="multipart/form-data">
     @csrf
     <div class="form-group">
         <label class="col-md-2 control-label">Full Names</label>

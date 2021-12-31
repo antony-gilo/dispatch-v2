@@ -12,6 +12,10 @@
     {{ $user->photo ? $user->photo->path : 'vendor/assets/images/users/avatar-1.jpg' }}
 @endsection
 
+@section('page_name')
+    View Users
+@endsection
+
 @section('table_name')
     <em> Enrolled System Users </em>
 @endsection
@@ -33,7 +37,7 @@
 
         @foreach ($users as $user)
             <tr>
-                <td><a href="{{ route('users.edit', $user->id) }}"> {{ $user->name }} </a></td>
+                <td><a href="{{ route('supervisor.users.edit', $user->id) }}"> {{ $user->name }} </a></td>
                 <td>{{ $user->role->role }}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->created_at->diffForHumans() }}</td>

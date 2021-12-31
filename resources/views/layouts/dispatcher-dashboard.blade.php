@@ -10,8 +10,6 @@
 
         <title>{{ config('app.name', 'Ambulance | Dispatch') }}</title>
 
-        <link rel="shortcut icon" href="{{ asset('vendor/assets/images/favicon.ico') }}">
-
         <!-- DataTables -->
         <link href="{{ asset('vendor/assets/plugins/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('vendor/assets/plugins/datatables/responsive.bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
@@ -23,7 +21,7 @@
         <link href="{{ asset('vendor/assets/css/style.css') }}" rel="stylesheet" type="text/css">
 
         <!-- Scripts -->
-
+        @livewireStyles
     </head>
 
 
@@ -37,7 +35,7 @@
                 <!-- LOGO -->
                 <div class="topbar-left">
                     <div class="text-center">
-                        <a href="index.html" class="logo">HOME | DASHBOARD</a>
+                        <a href="{{ route('dispatcher.index') }}" class="logo">HOME | DASHBOARD</a>
                     </div>
                 </div>
                 <!-- Button mobile view to collapse sidebar menu -->
@@ -62,35 +60,14 @@
                                     <a href="#" data-bs-target="#" class="dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-expanded="true">
                                         <i class="ti-bell"></i> <span class="badge badge-xs badge-danger">@yield('number_notifications')</span>
                                     </a>
-                                    <ul class="dropdown-menu dropdown-menu-lg">
-                                        <li class="text-center notifi-title">Notification <span class="badge badge-xs badge-success">3</span></li>
-                                        <li class="list-group">
-                                           <!-- list item-->
-                                           <a href="javascript:void(0);" class="list-group-item">
-                                              <div class="media">
-                                                 <div class="media-heading">Your order is placed</div>
-                                                 <p class="m-0">
-                                                   <small>Dummy text of the printing and typesetting industry.</small>
-                                                 </p>
-                                              </div>
-                                           </a>
-
-                                           <!-- last list item -->
-                                            <a href="javascript:void(0);" class="list-group-item">
-                                              <small class="text-primary">See all notifications</small>
-                                            </a>
-                                        </li>
-                                    </ul>
                                 </li>
                                 <li class="hidden-xs">
                                     <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="ti-fullscreen"></i></a>
                                 </li>
                                 <li class="dropdown">
-                                    <a href="" class="dropdown-toggle profile waves-effect waves-light" data-bs-toggle="dropdown" aria-expanded="true"><img src="{{ asset('vendor/assets/images/users/avatar-1.jpg') }}" alt="user-img" class="img-circle"> </a>
+                                    <a href="" class="dropdown-toggle profile waves-effect waves-light" data-bs-toggle="dropdown" aria-expanded="true"><img src="@yield('profile-pic-sm')" alt="user-img" class="img-circle"> </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="javascript:void(0)"> Profile</a></li>
-                                        <li><a href="javascript:void(0)"><span class="badge badge-success pull-right">5</span> Settings </a></li>
-                                        <li><a href="javascript:void(0)"> Lock screen</a></li>
+                                        <li><a href="javascript:void(0)"> &nbsp;</a></li>
                                         <li class="divider"></li>
                                         <li>
                                             <a href="{{ route('logout') }}"
@@ -119,15 +96,13 @@
                 <div class="sidebar-inner slimscrollleft">
                     <div class="user-details">
                         <div class="text-center">
-                            <img src="{{ asset('vendor/assets/images/users/avatar-1.jpg') }}" alt="" class="img-circle" height="50">
+                            <img src="@yield('profile-pic-lg')" alt="" class="img-circle" height="50">
                         </div>
                         <div class="user-info">
                             <div class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Kenny Rigdon</a>
+                                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">@yield('user_name')</a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="javascript:void(0)"> Profile</a></li>
-                                    <li><a href="javascript:void(0)"> Settings</a></li>
-                                    <li><a href="javascript:void(0)"> Lock screen</a></li>
+                                    <li><a href="javascript:void(0)"> &nbsp;</a></li>
                                     <li class="divider"></li>
                                     <li>
                                         <a href="{{ route('logout') }}"
@@ -142,35 +117,38 @@
                                 </ul>
                             </div>
 
-                            <p class="text-muted m-0"><i class="fa fa-dot-circle-o text-success"></i> Online</p>
+                            <p class="text-muted m-0"><i class="fa fa-dot-circle-o text-success"></i> Online </p>
                         </div>
                     </div>
                     <!--- Divider -->
                     <div id="sidebar-menu">
                         <ul>
                             <li>
-                                <a href="index.html" class="waves-effect"><i class="ti-home"></i><span> Dashboard </span></a>
+                                <a href="{{ route('dispatcher.index') }}" class="waves-effect"><i class="ti-home"></i><span> Dashboard </span></a>
                             </li>
 
+                            <li>
+                                <a href="{{ route('dispatcher.media.index') }}" class="waves-effect"><i class="ti-video-clapper"></i><span> Media </span></a>
+                            </li>
 
                             <li class="has_sub">
-                                <a href="javascript:void(0);" class="waves-effect"><i class="ti-user"></i> <span> Users </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                                <a href="{{ route('dispatcher.location.index') }}" class="waves-effect"><i class="ti-location-pin"></i> <span> Locations </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="icons-material.html">All Users</a></li>
-                                    <li><a href="icons-ion.html">Create User</a></li>
+                                    <li><a href="{{ route('dispatcher.location.index') }}">All Locations</a></li>
+                                    <li><a href="{{ route('dispatcher.location.create') }}">Add A Location</a></li>
                                 </ul>
                             </li>
 
                             <li class="has_sub">
-                                <a href="javascript:void(0);" class="waves-effect"><i class="ti-map-alt"></i><span> Maps </span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                                <a href="{{ route('dispatcher.ambulance.index') }}" class="waves-effect"><i class="fa fa-ambulance"></i> <span> Ambulances </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="maps-google.html"> Google Map</a></li>
-                                    <li><a href="maps-vector.html"> Vector Map</a></li>
+                                    <li><a href="{{ route('dispatcher.ambulance.index') }}">All Ambulances</a></li>
+                                    <li><a href="{{ route('dispatcher.ambulance.create') }}">Create Ambulance</a></li>
                                 </ul>
                             </li>
 
                             <li>
-                                <a href="calendar.html" class="waves-effect"><i class="ti-calendar"></i><span> Calendar <span class="badge badge-primary pull-right">NEW</span></span></a>
+                                <a href="{{ route('dispatch-ambulance.index') }}" class="waves-effect"><i class="ti-headphone-alt"></i><span> Dispatch Ambulance </span></a>
                             </li>
 
                         </ul>
@@ -186,12 +164,11 @@
                 <!-- Start content -->
                 <div class="content">
                     <div class="container">
-
                         <!-- Page-Title -->
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="page-header-title">
-                                    <h4 class="pull-left page-title">Dashboard</h4>
+                                    <h4 class="pull-left page-title">@yield('page_name')</h4>
                                     <ol class="breadcrumb pull-right">
                                         <li><a href=" {{ route('dispatcher.index') }} ">Dispatch</a></li>
                                         <li class="active">Dashboard</li>
@@ -201,12 +178,13 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row mb-md-1">
                             @yield('dashboard_panels')
                         </div>
 
-                        <div class="row">
+                        <div class="row m-t-10">
                             <div class="col-md-12">
+                                @yield('alerts')
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">
                                         <h3 class="panel-title">@yield('table_name')</h3>
@@ -236,7 +214,6 @@
         </div>
         <!-- END wrapper -->
 
-
         <!-- jQuery  -->
         <script src="{{ asset('vendor/assets/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('vendor/assets/js/jquery.min.js') }}"></script>
@@ -249,20 +226,18 @@
         <script src="{{ asset('vendor/assets/js/wow.min.js') }}"></script>
         <script src="{{ asset('vendor/assets/js/jquery.nicescroll.js') }}"></script>
         <script src="{{ asset('vendor/assets/js/jquery.scrollTo.min.js') }}"></script>
-
         <script src="{{ asset('vendor/assets/plugins/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
 
         <!-- Datatables-->
-        <script src="{{ asset('vendor/assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-        <script src="{{ asset('vendor/assets/plugins/datatables/dataTables.bootstrap.js') }}"></script>
-        <script src="{{ asset('vendor/assets/plugins/datatables/dataTables.responsive.min.js') }}"></script>
-        <script src="{{ asset('vendor/assets/plugins/datatables/responsive.bootstrap.min.js') }}"></script>
+        <script src="{{ asset('vendor/assets/plugins/datatables/dataTables.min.js') }}"></script>
+        <script src="{{ asset('vendor/assets/pages/datatables.init.js') }}"></script>
 
         <script src="{{ asset('vendor/assets/pages/dashborad.js') }}"></script>
 
         <script src="{{ asset('vendor/assets/js/app.js') }}"></script>
         <script src="{{ asset('js/app.js') }}"></script>
 
+        @livewireScripts
     </body>
 </html>
 

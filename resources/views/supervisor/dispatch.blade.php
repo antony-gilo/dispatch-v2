@@ -55,25 +55,6 @@
                                     <a href="#" data-bs-target="#" class="dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-expanded="true">
                                         <i class="ti-bell"></i> <span class="badge badge-xs badge-danger">@yield('number_notifications')</span>
                                     </a>
-                                    <ul class="dropdown-menu dropdown-menu-lg">
-                                        <li class="text-center notifi-title">Notification <span class="badge badge-xs badge-success">3</span></li>
-                                        <li class="list-group">
-                                           <!-- list item-->
-                                           <a href="javascript:void(0);" class="list-group-item">
-                                              <div class="media">
-                                                 <div class="media-heading">Your order is placed</div>
-                                                 <p class="m-0">
-                                                   <small>Dummy text of the printing and typesetting industry.</small>
-                                                 </p>
-                                              </div>
-                                           </a>
-
-                                           <!-- last list item -->
-                                            <a href="javascript:void(0);" class="list-group-item">
-                                              <small class="text-primary">See all notifications</small>
-                                            </a>
-                                        </li>
-                                    </ul>
                                 </li>
                                 <li class="hidden-xs">
                                     <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="ti-fullscreen"></i></a>
@@ -81,9 +62,7 @@
                                 <li class="dropdown">
                                     <a href="" class="dropdown-toggle profile waves-effect waves-light" data-bs-toggle="dropdown" aria-expanded="true"><img src="{{ $user->photo ? $user->photo->path : 'vendor/assets/images/users/avatar-1.jpg' }}" alt="user-img" class="img-circle"> </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="javascript:void(0)"> Profile</a></li>
-                                        <li><a href="javascript:void(0)"><span class="badge badge-success pull-right">5</span> Settings </a></li>
-                                        <li><a href="javascript:void(0)"> Lock screen</a></li>
+                                        <li><a href="javascript:void(0)"> &nbsp;</a></li>
                                         <li class="divider"></li>
                                         <li>
                                             <a href="{{ route('logout') }}"
@@ -120,9 +99,7 @@
                                     {{ $user->name }} &nbsp;<i class="fa fa-caret-down"></i>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="javascript:void(0)"> Profile</a></li>
-                                    <li><a href="javascript:void(0)"> Settings</a></li>
-                                    <li><a href="javascript:void(0)"> Lock screen</a></li>
+                                    <li><a href="javascript:void(0)"> &nbsp;</a></li>
                                     <li class="divider"></li>
                                     <li>
                                         <a href="{{ route('logout') }}"
@@ -149,47 +126,35 @@
 
 
                             <li class="has_sub">
-                                <a href="{{ route('users.index') }}" class="waves-effect"><i class="ti-user"></i> <span> Users </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                                <a href="{{ route('supervisor.users.index') }}" class="waves-effect"><i class="ti-user"></i> <span> Users </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="{{ route('users.index') }}">All Users</a></li>
-                                    <li><a href="{{ route('users.create') }}">Create User</a></li>
+                                    <li><a href="{{ route('supervisor.users.index') }}">All Users</a></li>
+                                    <li><a href="{{ route('supervisor.users.create') }}">Create User</a></li>
                                 </ul>
                             </li>
 
                             <li>
-                                <a href="{{ route('media.index') }}" class="waves-effect"><i class="ti-video-clapper"></i><span> Media </span></a>
+                                <a href="{{ route('supervisor.media.index') }}" class="waves-effect"><i class="ti-video-clapper"></i><span> Media </span></a>
                             </li>
 
                             <li class="has_sub">
-                                <a href="{{ route('location.index') }}" class="waves-effect"><i class="ti-location-pin"></i> <span> Locations </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                                <a href="{{ route('supervisor.location.index') }}" class="waves-effect"><i class="ti-location-pin"></i> <span> Locations </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="{{ route('location.index') }}">All Locations</a></li>
-                                    <li><a href="{{ route('location.create') }}">Add A Location</a></li>
+                                    <li><a href="{{ route('supervisor.location.index') }}">All Locations</a></li>
+                                    <li><a href="{{ route('supervisor.location.create') }}">Add A Location</a></li>
                                 </ul>
                             </li>
 
                             <li class="has_sub">
-                                <a href="{{ route('ambulance.index') }}" class="waves-effect"><i class="fa fa-ambulance"></i> <span> Ambulances </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                                <a href="{{ route('supervisor.ambulance.index') }}" class="waves-effect"><i class="fa fa-ambulance"></i> <span> Ambulances </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="{{ route('ambulance.index') }}">All Ambulances</a></li>
-                                    <li><a href="{{ route('ambulance.create') }}">Create Ambulance</a></li>
-                                </ul>
-                            </li>
-
-                            <li class="has_sub">
-                                <a href="javascript:void(0);" class="waves-effect"><i class="ti-map-alt"></i><span> Maps </span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
-                                <ul class="list-unstyled">
-                                    <li><a href="maps-google.html"> Google Map</a></li>
-                                    <li><a href="maps-vector.html"> Vector Map</a></li>
+                                    <li><a href="{{ route('supervisor.ambulance.index') }}">All Ambulances</a></li>
+                                    <li><a href="{{ route('supervisor.ambulance.create') }}">Create Ambulance</a></li>
                                 </ul>
                             </li>
 
                             <li>
                                 <a href="{{ route('dispatch-ambulance.index') }}" class="waves-effect"><i class="ti-headphone-alt"></i><span> Dispatch Ambulance </span></a>
-                            </li>
-
-                            <li>
-                                <a href="calendar.html" class="waves-effect"><i class="ti-calendar"></i><span> Calendar <span class="badge badge-primary pull-right">NEW</span></span></a>
                             </li>
 
                         </ul>
@@ -209,7 +174,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="page-header-title">
-                                    <h4 class="pull-left page-title">Dashboard</h4>
+                                    <h4 class="pull-left page-title">Dispatch Ambulance</h4>
                                     <ol class="breadcrumb pull-right">
                                         <li><a href=" {{ route('supervisor.index') }} ">Dispatch</a></li>
                                         <li class="active">Dashboard</li>

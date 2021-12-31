@@ -12,6 +12,10 @@
     {{ $user->photo ? $user->photo->path : '/vendor/assets/images/users/avatar-1.jpg' }}
 @endsection
 
+@section('page_name')
+    Edit User
+@endsection
+
 @section('alerts')
 
 @if (count($errors) > 0)
@@ -40,7 +44,7 @@
 @endsection
 
 @section('table_content')
-<form class="form-horizontal" method="POST" action=" {{ route('users.update', $user->id) }} " enctype="multipart/form-data">
+<form class="form-horizontal" method="POST" action=" {{ route('supervisor.users.update', $user->id) }} " enctype="multipart/form-data">
     @csrf
     <input type="hidden" class="form-control" name="_method" value="PATCH">
     <div class="form-group">

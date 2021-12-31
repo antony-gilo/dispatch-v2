@@ -12,6 +12,10 @@
     {{ $user->photo !== null ? $user->photo->path : 'vendor/assets/images/users/avatar-1.jpg' }}
 @endsection
 
+@section('page_name')
+    Edit Location
+@endsection
+
 @section('alerts')
 
 @if (count($errors) > 0)
@@ -37,7 +41,7 @@
 
 @section('table_content')
 
-<form class="form-horizontal" method="POST" action=" {{ route('location.update', $location->id) }} ">
+<form class="form-horizontal" method="POST" action=" {{ route('supervisor.location.update', $location->id) }} ">
     @csrf
     <input type="hidden" class="form-control" name="_method" value="PATCH">
     <div class="form-group">
@@ -68,7 +72,7 @@
             <button type="submit" class="btn btn-primary btn-block waves-effect waves-light">Update Location</button>
         </div>
     </form>
-    <form class="form-horizontal" method="POST" action=" {{ route('location.destroy', $location->id) }} ">
+    <form class="form-horizontal" method="POST" action=" {{ route('supervisor.location.destroy', $location->id) }} ">
         @csrf
         <div class="col-md-4">
             <input type="hidden" class="form-control" name="_method" value="DELETE">

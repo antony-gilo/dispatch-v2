@@ -12,6 +12,10 @@
     {{ $user->photo !== null ? $user->photo->path : 'vendor/assets/images/users/avatar-1.jpg' }}
 @endsection
 
+@section('page_name')
+    Create Ambulances
+@endsection
+
 @section('alerts')
 
 @if (count($errors) > 0)
@@ -37,7 +41,7 @@
 
 @section('table_content')
 
-<form class="form-horizontal" method="POST" action=" {{ route('ambulance.store') }} " enctype="multipart/form-data">
+<form class="form-horizontal" method="POST" action=" {{ route('supervisor.ambulance.store') }} " enctype="multipart/form-data">
     @csrf
     <div class="form-group">
         <label class="col-md-2 control-label">Ambulance Plate Registration</label>

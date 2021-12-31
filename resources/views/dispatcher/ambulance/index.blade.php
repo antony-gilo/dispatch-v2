@@ -1,4 +1,4 @@
-@extends('layouts.supervisor-dashboard')
+@extends('layouts.dispatcher-dashboard')
 
 @section('user_name')
    {{Auth::user()->name }} &nbsp;<i class="fa fa-caret-down"></i>
@@ -13,7 +13,7 @@
 @endsection
 
 @section('page_name')
-    All Ambulances
+    View Ambulances
 @endsection
 
 @section('table_name')

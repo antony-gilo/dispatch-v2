@@ -12,6 +12,10 @@
     {{ $user->photo !== null ? $user->photo->path : 'vendor/assets/images/users/avatar-1.jpg' }}
 @endsection
 
+@section('page_name')
+    View Locations
+@endsection
+
 @section('alerts')
 
 @if (count($errors) > 0)
@@ -53,10 +57,10 @@
 
         @foreach ($locations as $location)
             <tr>
-                <td><a href="{{ route('location.show', $location->id) }}"> {{ $location->id }} </a></td>
+                <td><a href="{{ route('supervisor.location.show', $location->id) }}"> {{ $location->id }} </a></td>
                 <td>
                     {{ $location->location }}
-                    <a href="{{ route('location.edit', $location->id)}}"><i class="ti-pencil"></i> </a>
+                    <a href="{{ route('supervisor.location.edit', $location->id)}}"><i class="ti-pencil"></i> </a>
                 </td>
                 <td>{{ $location->hospital }}</td>
                 <td>{{ $location->created_at->diffForHumans() }}</td>

@@ -36,7 +36,7 @@ class CustomLoginController extends Controller
             } elseif ($user->is_dispatcher()) {
                 return redirect()->route('dispatcher.index');
             } else {
-                return redirect()->route('home');
+                return redirect()->route('login');
             }
         } else {
             Session::flash('invalid.login', 'Your credentials <strong>do NOT MATCH</strong> our records. Try again.');

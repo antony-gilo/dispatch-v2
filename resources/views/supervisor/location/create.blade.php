@@ -12,23 +12,8 @@
     {{ $user->photo !== null ? $user->photo->path : 'vendor/assets/images/users/avatar-1.jpg' }}
 @endsection
 
-@section('alerts')
-
-@if (count($errors) > 0)
-    <div class="alert alert-danger alert-dismissible fade in">
-        <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">×</span>
-        </button>
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>
-                <strong>{{$error}}</strong>
-            </li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-
+@section('page_name')
+    Create Location
 @endsection
 
 @section('alerts')
@@ -56,7 +41,7 @@
 
 @section('table_content')
 
-<form class="form-horizontal" method="POST" action=" {{ route('location.store') }} " enctype="multipart/form-data">
+<form class="form-horizontal" method="POST" action=" {{ route('supervisor.location.store') }} " enctype="multipart/form-data">
     @csrf
     <div class="form-group">
         <label class="col-md-2 control-label">Name Of Location</label>

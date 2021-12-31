@@ -12,7 +12,13 @@
     {{ $user->photo ? $user->photo->path : 'vendor/assets/images/users/avatar-1.jpg' }}
 @endsection
 
-@if (count($errors) > 0)
+@section('page_name')
+    Edit Ambulances
+@endsection
+
+
+@section('alerts')
+    @if (count($errors) > 0)
     <div class="alert alert-danger alert-dismissible fade in">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><strong>×</strong></span></button>
         <ul>
@@ -24,6 +30,8 @@
         </ul>
     </div>
 @endif
+@endsection
+
 
 @section('dashboard_panels')
 <div class="text-center mb-1">
@@ -37,7 +45,7 @@
 
 @section('table_content')
 
-<form class="form-horizontal" method="POST" action=" {{ route('ambulance.update', $ambulance->id) }} " enctype="multipart/form-data">
+<form class="form-horizontal" method="POST" action=" {{ route('supervisor.ambulance.update', $ambulance->id) }} " enctype="multipart/form-data">
     @csrf
     <input type="hidden" class="form-control" name="_method" value="PATCH">
     <div class="form-group">
@@ -94,7 +102,7 @@
             <button type="submit" class="btn btn-primary btn-block waves-effect waves-light mb-1">Update Ambulance Details</button>
         </div>
 </form>
-<form class="form-horizontal" method="POST" action=" {{ route('ambulance.destroy', $ambulance->id) }} ">
+<form class="form-horizontal" method="POST" action=" {{ route('supervisor.ambulance.destroy', $ambulance->id) }} ">
         @csrf
         <div class="col-md-4">
             <input type="hidden" class="form-control" name="_method" value="DELETE">
