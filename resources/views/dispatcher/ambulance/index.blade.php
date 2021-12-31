@@ -37,7 +37,7 @@
 
         @foreach ($ambulances as $ambulance)
             <tr>
-                <td><a href="{{ route('supervisor.ambulance.edit', $ambulance->id) }}"> {{ $ambulance->id }} </a></td>
+                <td><a href="{{ route('dispatcher.ambulance.edit', $ambulance->id) }}"> {{ $ambulance->id }} </a></td>
                 <td>{{ $ambulance->reg_no }}</td>
                 <td>{{ ($ambulance->status  === 0) ? 'Standby' : 'On Duty' }}</td>
                 <td>
