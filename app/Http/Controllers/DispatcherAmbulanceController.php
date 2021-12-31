@@ -67,7 +67,7 @@ class DispatcherAmbulanceController extends Controller
         }
 
         Ambulance::create($ambulance_details);
-        return redirect()->route('supervisor.ambulance.index');
+        return redirect()->route('dispatcher.ambulance.index');
     }
 
     /**
