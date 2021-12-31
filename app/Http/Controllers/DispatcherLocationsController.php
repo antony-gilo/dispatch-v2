@@ -8,7 +8,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class SupervisorLocationsController extends Controller
+
+class DispatcherLocationsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +18,11 @@ class SupervisorLocationsController extends Controller
      */
     public function index()
     {
+        //
         $users = User::all();
         $user = Auth::user();
         $locations = Location::all();
-        return view('supervisor.location.index', compact('user', 'users', 'locations'));
+        return view('dispatcher.location.index', compact('user', 'users', 'locations'));
     }
 
     /**
@@ -30,9 +32,10 @@ class SupervisorLocationsController extends Controller
      */
     public function create()
     {
+        //
         $users = User::all();
         $user = Auth::user();
-        return view('supervisor.location.create', compact('user', 'users'));
+        return view('dispatcher.location.create', compact('user', 'users'));
     }
 
     /**
@@ -43,6 +46,7 @@ class SupervisorLocationsController extends Controller
      */
     public function store(CreateLocationRequest $request)
     {
+        //
         $location_details = $request->all();
         $coordinates = explode(",", $location_details['co-ordinates']);
 
@@ -50,7 +54,7 @@ class SupervisorLocationsController extends Controller
         $location_details['longitude'] = trim($coordinates[1]);
 
         Location::create($location_details);
-        return redirect()->route('supervisor.location.index');
+        return redirect()->route('dispatcher.location.index');
     }
 
     /**
@@ -61,11 +65,12 @@ class SupervisorLocationsController extends Controller
      */
     public function show($id)
     {
+        //
         $location = Location::findOrFail($id);
         $users = User::all();
         $user = Auth::user();
 
-        return view('supervisor.location.show', compact('location', 'users', 'user'));
+        return view('dispatcher.location.show', compact('location', 'users', 'user'));
     }
 
     /**
@@ -76,11 +81,12 @@ class SupervisorLocationsController extends Controller
      */
     public function edit($id)
     {
+        //
         $location = Location::findOrFail($id);
         $users = User::all();
         $user = Auth::user();
 
-        return view('supervisor.location.edit', compact('location', 'users', 'user'));
+        return view('dispatcher.location.edit', compact('location', 'users', 'user'));
     }
 
     /**
@@ -92,6 +98,7 @@ class SupervisorLocationsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //
         $location = Location::findOrFail($id);
 
         if (trim($request['co-ordinates']) == '') {
@@ -106,7 +113,7 @@ class SupervisorLocationsController extends Controller
         $location_details['longitude'] = trim($coordinates[1]);
 
         $location->update($location_details);
-        return redirect()->route('supervisor.location.index');
+        return redirect()->route('dispatcher.location.index');
     }
 
     /**
@@ -117,9 +124,10 @@ class SupervisorLocationsController extends Controller
      */
     public function destroy($id)
     {
+        //
         $location = Location::findOrFail($id);
         $location->delete();
 
-        return redirect()->route('supervisor.location.index');
+        return redirect()->route('dispatcher.location.index');
     }
 }
