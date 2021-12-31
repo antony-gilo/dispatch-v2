@@ -60,7 +60,7 @@ class SupervisorAmbulanceController extends Controller
         }
 
         Ambulance::create($ambulance_details);
-        return redirect()->route('ambulance.index');
+        return redirect()->route('supervisor.ambulance.index');
     }
 
     /**
@@ -116,7 +116,7 @@ class SupervisorAmbulanceController extends Controller
         }
 
         $ambulance->update($ambulance_details);
-        return redirect()->route('ambulance.index');
+        return redirect()->route('supervisor.ambulance.index');
     }
 
     /**
@@ -133,12 +133,12 @@ class SupervisorAmbulanceController extends Controller
             $ambulance->delete();
             Session::flash('ambulance.delete', 'The User: ' . $ambulance->reg_no . ' has been deleted successfully!');
 
-            return redirect()->route('ambulance.index');
+            return redirect()->route('supervisor.ambulance.index');
         } else {
             $ambulance->delete();
             Session::flash('ambulance.delete', 'The User: ' . $ambulance->reg_no . ' has been deleted successfully!');
 
-            return redirect()->route('ambulance.index');
+            return redirect()->route('supervisor.ambulance.index');
         }
     }
 }

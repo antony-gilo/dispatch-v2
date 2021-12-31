@@ -27,7 +27,7 @@ class DispatcherAmbulanceController extends Controller
         $ambulances = Ambulance::all();
         $user = Auth::user();
 
-        return view('supervisor.ambulance.index', compact('ambulances', 'user'));
+        return view('dispatcher.ambulance.index', compact('ambulances', 'user'));
     }
 
     /**
@@ -40,7 +40,7 @@ class DispatcherAmbulanceController extends Controller
         //
         $user = Auth::user();
         $drivers_array = User::where('role_id', 3)->get();
-        return view('supervisor.ambulance.create', compact('user', 'drivers_array'));
+        return view('dispatcher.ambulance.create', compact('user', 'drivers_array'));
     }
 
     /**
@@ -49,9 +49,25 @@ class DispatcherAmbulanceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateAmbulanceRequest $request)
     {
         //
+        $ambulance_details = $request->all();
+
+        $ambulance_details['reg_no'] = preg_replace("/\s+/", "", $request->reg_no);
+
+        if ($file = $request->file('photo_id')) {
+
+            $name = $file->getClientOriginalName() . time();
+            $file->move('images', $name);
+
+            $ambulance_photo = Photo::create(['path' => $name]);
+
+            $ambulance_details['photo_id'] = $ambulance_photo->id;
+        }
+
+        Ambulance::create($ambulance_details);
+        return redirect()->route('supervisor.ambulance.index');
     }
 
     /**
@@ -74,6 +90,11 @@ class DispatcherAmbulanceController extends Controller
     public function edit($id)
     {
         //
+        $user = Auth::user();
+        $drivers_array = User::where('role_id', 3)->get();
+        $ambulance = Ambulance::findOrFail($id);
+
+        return view('dispatcher.ambulance.edit', compact('user', 'drivers_array', 'ambulance'));
     }
 
     /**
@@ -86,6 +107,25 @@ class DispatcherAmbulanceController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $ambulance = Ambulance::findOrFail($id);
+        $ambulance_details = $request->all();
+
+        if ($request->reg_no === '') {
+            $ambulance_details = $request->except('reg_no');
+        }
+
+        if ($file = $request->file('photo_id')) {
+
+            $name = $file->getClientOriginalName() . time();
+            $file->move('images', $name);
+
+            $ambulance_photo = Photo::create(['path' => $name]);
+
+            $ambulance_details['photo_id'] = $ambulance_photo->id;
+        }
+
+        $ambulance->update($ambulance_details);
+        return redirect()->route('dispatcher.ambulance.index');
     }
 
     /**
@@ -97,5 +137,18 @@ class DispatcherAmbulanceController extends Controller
     public function destroy($id)
     {
         //
+        $ambulance = Ambulance::findOrFail($id);
+
+        if (unlink(public_path() . $ambulance->photo->path)) {
+            $ambulance->delete();
+            Session::flash('ambulance.delete', 'The User: ' . $ambulance->reg_no . ' has been deleted successfully!');
+
+            return redirect()->route('dispatcher.ambulance.index');
+        } else {
+            $ambulance->delete();
+            Session::flash('ambulance.delete', 'The User: ' . $ambulance->reg_no . ' has been deleted successfully!');
+
+            return redirect()->route('dispatcher.ambulance.index');
+        }
     }
 }
