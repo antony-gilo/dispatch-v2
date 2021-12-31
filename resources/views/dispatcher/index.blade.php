@@ -149,7 +149,7 @@
                             </li>
 
                             <li class="has_sub">
-                                <a href="{{ route('location.index') }}" class="waves-effect"><i class="ti-location-pin"></i> <span> Locations </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                                <a href="{{ route('dispatcher.location.index') }}" class="waves-effect"><i class="ti-location-pin"></i> <span> Locations </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                                 <ul class="list-unstyled">
                                     <li><a href="{{ route('dispatcher.location.index') }}">All Locations</a></li>
                                     <li><a href="{{ route('dispatcher.location.create') }}">Add A Location</a></li>
@@ -157,7 +157,7 @@
                             </li>
 
                             <li class="has_sub">
-                                <a href="{{ route('ambulance.index') }}" class="waves-effect"><i class="fa fa-ambulance"></i> <span> Ambulances </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                                <a href="{{ route('dispatcher.ambulance.index') }}" class="waves-effect"><i class="fa fa-ambulance"></i> <span> Ambulances </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                                 <ul class="list-unstyled">
                                     <li><a href="{{ route('dispatcher.ambulance.index') }}">All Ambulances</a></li>
                                     <li><a href="{{ route('dispatcher.ambulance.create') }}">Create Ambulance</a></li>
@@ -185,7 +185,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="page-header-title">
-                                    <h4 class="pull-left page-title">Dashboard</h4>
+                                    <h4 class="pull-left page-title">Dispatcher Dashboard</h4>
                                     <ol class="breadcrumb pull-right">
                                         <li><a href=" {{ route('dispatcher.index') }} ">Dispatch</a></li>
                                         <li class="active">Dispatcher Dashboard</li>

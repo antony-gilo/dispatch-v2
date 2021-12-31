@@ -11,6 +11,8 @@ use App\Http\Controllers\SupervisorMediaController;
 use App\Http\Controllers\SupervisorUsersController;
 use App\Http\Controllers\DispatchAmbulanceController;
 use App\Http\Controllers\DispatcherAmbulanceController;
+use App\Http\Controllers\DispatcherLocationsController;
+use App\Http\Controllers\DispatcherMediaController;
 use App\Http\Controllers\DispatcherRedirectController;
 use App\Http\Controllers\SupervisorRedirectController;
 use App\Http\Controllers\SupervisorAmbulanceController;
@@ -46,6 +48,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/dispatcher', [DispatcherRedirectController::class, 'index'])->name('dispatcher.index');
     Route::resource('/dispatcher/ambulance', DispatcherAmbulanceController::class, ['as' => 'dispatcher']);
+    Route::resource('/dispatcher/location', DispatcherLocationsController::class, ['as' => 'dispatcher']);
+    Route::resource('/dispatcher/media', DispatcherMediaController::class, ['as' => 'dispatcher']);
 });
 
 
