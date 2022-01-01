@@ -42,11 +42,16 @@ class SupervisorRedirectController extends Controller
             ->orderBy('count')
             ->get();
 
-        foreach ($common_location as $location) {
-            $hospital_id = $location->location_id;
+        if ($common_location !== null) {
+
+            foreach ($common_location as $location) {
+                $hospital_id = $location->location_id;
+            }
+
+            $common_hospital = Location::findOrFail($hospital_id)->hospital;
         }
 
-        $common_hospital = Location::findOrFail($hospital_id)->hospital;
+
 
         return view('supervisor.index', compact('users', 'user', 'ambulances', 'dispatches', 'dispatches_count', 'monthly_dispatch', 'stand_by', 'on_duty', 'drivers', 'dispatchers', 'locations', 'common_hospital'));
     }

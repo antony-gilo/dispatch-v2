@@ -121,7 +121,7 @@ class SupervisorUsersController extends Controller
 
         $user->update($user_data);
         Session::flash('user.update', 'The User: ' . $user->name . ' has been updated successfully!');
-        return redirect()->route('users.index');
+        return redirect()->route('supervisor.users.index');
     }
 
     /**
@@ -140,13 +140,13 @@ class SupervisorUsersController extends Controller
             unlink(public_path() . $user->photo->path);
             $user->delete();
             Session::flash('user.delete', 'The User: ' . $user->name . ' has been deleted successfully!');
-            return redirect()->route('users.index');
+            return redirect()->route('supervisor.users.index');
         } catch (\Throwable $th) {
 
             $user->delete();
             Session::flash('user.delete', 'The User: ' . $user->name . ' has been deleted successfully!');
 
-            return redirect()->route('users.index');
+            return redirect()->route('supervisor.users.index');
         }
         // if (unlink(public_path() . $user->photo->path)) {
         //     $user->delete();

@@ -98,7 +98,7 @@
             <button type="submit" class="btn btn-primary btn-block waves-effect waves-light mb-1">Update User</button>
         </div>
 </form>
-<form class="form-horizontal" method="POST" action=" {{ route('users.destroy', $user->id) }} ">
+<form class="form-horizontal" method="POST" action=" {{ route('supervisor.users.destroy', $user->id) }} ">
         @csrf
         <div class="col-md-4">
             <input type="hidden" class="form-control" name="_method" value="DELETE">
