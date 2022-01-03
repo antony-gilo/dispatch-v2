@@ -140,8 +140,8 @@
                             <li class="has_sub">
                                 <a href="{{ route('supervisor.location.index') }}" class="waves-effect"><i class="ti-location-pin"></i> <span> Locations </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="{{ route('supervisor.location.index') }}">All Locations</a></li>
-                                    <li><a href="{{ route('supervisor.location.create') }}">Add A Location</a></li>
+                                    <li><a href="{{ route('supervisor.location.index') }}">All Hospitals</a></li>
+                                    <li><a href="{{ route('supervisor.location.create') }}">Add Hospiatl</a></li>
                                 </ul>
                             </li>
 

@@ -10,11 +10,6 @@
 
         <title>{{ config('app.name', 'Ambulance | Dispatch') }}</title>
 
-        <!-- DataTables -->
-        <link href="{{ asset('vendor/assets/plugins/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('vendor/assets/plugins/datatables/responsive.bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('vendor/assets/plugins/datatables/dataTables.bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
-
 
         <link href="{{ asset('vendor/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('vendor/assets/css/icons.css') }}" rel="stylesheet" type="text/css">
@@ -65,7 +60,7 @@
                                     <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="ti-fullscreen"></i></a>
                                 </li>
                                 <li class="dropdown">
-                                    <a href="" class="dropdown-toggle profile waves-effect waves-light" data-bs-toggle="dropdown" aria-expanded="true"><img src="@yield('profile-pic-sm')" alt="user-img" class="img-circle"> </a>
+                                    <a href="" class="dropdown-toggle profile waves-effect waves-light" data-bs-toggle="dropdown" aria-expanded="true"><img src="{{ $user->photo ? $user->photo->path : 'vendor/assets/images/users/avatar-1.jpg' }}" alt="user-img" class="img-circle"> </a>
                                     <ul class="dropdown-menu">
                                         <li><a href="javascript:void(0)"> &nbsp;</a></li>
                                         <li class="divider"></li>
@@ -96,11 +91,13 @@
                 <div class="sidebar-inner slimscrollleft">
                     <div class="user-details">
                         <div class="text-center">
-                            <img src="@yield('profile-pic-lg')" alt="" class="img-circle" height="50">
+                            <img src="{{ $user->photo !== null ? $user->photo->path : 'vendor/assets/images/users/avatar-1.jpg' }}" alt="" class="img-circle" height="50">
                         </div>
                         <div class="user-info">
                             <div class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">@yield('user_name')</a>
+                                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{ $user->name }} &nbsp;<i class="fa fa-caret-down"></i>
+                                </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="javascript:void(0)"> &nbsp;</a></li>
                                     <li class="divider"></li>
@@ -168,7 +165,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="page-header-title">
-                                    <h4 class="pull-left page-title">@yield('page_name')</h4>
+                                    <h4 class="pull-left page-title">Dispatch Ambulance</h4>
                                     <ol class="breadcrumb pull-right">
                                         <li><a href=" {{ route('dispatcher.index') }} ">Dispatch</a></li>
                                         <li class="active">Dashboard</li>
@@ -184,13 +181,28 @@
 
                         <div class="row m-t-10">
                             <div class="col-md-12">
-                                @yield('alerts')
+                                @if (count($errors) > 0)
+                                    <div class="alert alert-danger alert-dismissible fade in">
+                                        <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                            <li>
+                                                <strong>{{$error}}</strong>
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">
-                                        <h3 class="panel-title">@yield('table_name')</h3>
+                                        <h3 class="panel-title"><em> Dispatch Ambulance </em></h3>
                                     </div>
                                     <div class="panel-body">
-                                        @yield('table_content')
+                                        <section>
+                                            @livewire('dispatch-ambulance', ['locations' => $locations, 'ambulance_array' => $ambulance_array])
+                                        </section>
                                     </div>
                                 </div>
                             </div>
@@ -240,6 +252,9 @@
         @livewireScripts
     </body>
 </html>
+
+
+
 
 
 

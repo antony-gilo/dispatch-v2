@@ -165,7 +165,7 @@
                             </li>
 
                             <li>
-                                <a href="{{ route('dispatch-ambulance.index') }}" class="waves-effect"><i class="ti-headphone-alt"></i><span> Dispatch Ambulance </span></a>
+                                <a href="{{ route('dispatcher.dispatch-ambulance.index') }}" class="waves-effect"><i class="ti-headphone-alt"></i><span> Dispatch Ambulance </span></a>
                             </li>
 
                         </ul>

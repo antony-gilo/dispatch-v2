@@ -11,6 +11,7 @@ use App\Http\Controllers\SupervisorMediaController;
 use App\Http\Controllers\SupervisorUsersController;
 use App\Http\Controllers\DispatchAmbulanceController;
 use App\Http\Controllers\DispatcherAmbulanceController;
+use App\Http\Controllers\DispatcherDispatchAmbulanceController;
 use App\Http\Controllers\DispatcherLocationsController;
 use App\Http\Controllers\DispatcherMediaController;
 use App\Http\Controllers\DispatcherRedirectController;
@@ -44,12 +45,13 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/supervisor/users', SupervisorUsersController::class, ['as' => 'supervisor']);
     Route::resource('/supervisor/ambulance', SupervisorAmbulanceController::class, ['as' => 'supervisor']);
     Route::resource('/supervisor/location', SupervisorLocationsController::class, ['as' => 'supervisor']);
-    Route::resource('/dispatch-ambulance', DispatchAmbulanceController::class);
+    Route::resource('/supervisor/dispatch-ambulance', DispatchAmbulanceController::class);
 
     Route::get('/dispatcher', [DispatcherRedirectController::class, 'index'])->name('dispatcher.index');
     Route::resource('/dispatcher/ambulance', DispatcherAmbulanceController::class, ['as' => 'dispatcher']);
     Route::resource('/dispatcher/location', DispatcherLocationsController::class, ['as' => 'dispatcher']);
     Route::resource('/dispatcher/media', DispatcherMediaController::class, ['as' => 'dispatcher']);
+    Route::resource('/dispatcher/dispatch-ambulance', DispatcherDispatchAmbulanceController::class, ['as' => 'dispatcher']);
 });
 
 
@@ -92,4 +94,36 @@ Route::middleware(['supervisor'])->group(function () {
 Route::middleware(['dispatcher'])->group(function () {
     Route::get('/dispatcher', [DispatcherRedirectController::class, 'index'])->name('dispatcher.index');
     Route::resource('/dispatcher/ambulance', DispatcherAmbulanceController::class, ['as' => 'dispatcher']);
+
+    // EMAIL NOTIFICATIONS ROUTE
+    Route::get('/dispatcher/emails/dispatch-notification', function () {
+
+        $driver_email = session('driver_email');
+        $driver_name = session('driver_name');
+        $victim_name = session('victim_name');
+        $preferred_hospital = session('preferred_hospital');
+        $caller_name = session('caller_name');
+        $caller_phone = session('caller_phone');
+
+        $dispatch_info = [
+            'title' => 'AMBULANCE DISPATCH NOTIFICATION',
+            'driver_name' => $driver_name,
+            'driver_email' => $driver_email,
+            'victim_name' => $victim_name,
+            'preferred_hospital' => $preferred_hospital,
+            'caller_name' => $caller_name,
+            'caller_phone' => $caller_phone,
+        ];
+
+        Mail::send('dispatcher.emails.dispatch-notification', $dispatch_info, function ($message) {
+
+            $driver_email = session('driver_email');
+            $driver_name = session('driver_name');
+
+            $message->to($driver_email, $driver_name);
+            $message->subject('[dispatch.io] EMERGENCY NOTIFICATION');
+        });
+
+        return view('dispatcher.emails.dispatch-notification', $dispatch_info);
+    })->name('dispatch-notification');
 });
