@@ -216,7 +216,13 @@
                                 <div class="panel-body">
                                     <h3 class=""><b>{{ $dispatches_count }}</b></h3>
                                     <p class="text-muted">&nbsp;</p>
-                                    <p class="text-muted"><b>{{ $monthly_dispatch / $dispatches_count * 100 }}%</b> Of Dispatches Made This Month</p>
+                                    <p class="text-muted">
+                                        <b>
+                                            @if ($dispatches_count > 0)
+                                                {{ $dispatch_percentage }}%</b> Of Dispatches Made This Month</p>
+                                            @else
+                                                0 </b> Dispatches Made This Month</p>
+                                            @endif
                                 </div>
                             </div>
                         </div>

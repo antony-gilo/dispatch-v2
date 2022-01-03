@@ -51,8 +51,10 @@ class SupervisorRedirectController extends Controller
             $common_hospital = Location::findOrFail($hospital_id)->hospital;
         }
 
+        $dispatch_percentage = $monthly_dispatch / $dispatches_count * 100;
+        $dispatch_percentage = number_format((float)$dispatch_percentage, 2, '.', '');
 
 
-        return view('supervisor.index', compact('users', 'user', 'ambulances', 'dispatches', 'dispatches_count', 'monthly_dispatch', 'stand_by', 'on_duty', 'drivers', 'dispatchers', 'locations', 'common_hospital'));
+        return view('supervisor.index', compact('users', 'user', 'ambulances', 'dispatches', 'dispatches_count', 'monthly_dispatch', 'stand_by', 'on_duty', 'drivers', 'dispatchers', 'locations', 'common_hospital', 'dispatch_percentage'));
     }
 }
