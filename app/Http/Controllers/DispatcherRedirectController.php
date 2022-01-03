@@ -56,6 +56,6 @@ class DispatcherRedirectController extends Controller
         $dispatch_percentage = number_format((float)$dispatch_percentage, 2, '.', '');
 
 
-        return view('supervisor.index', compact('users', 'user', 'ambulances', 'dispatches', 'dispatches_count', 'monthly_dispatch', 'stand_by', 'on_duty', 'drivers', 'dispatchers', 'locations', 'common_hospital', 'dispatch_percentage'));
+        return view('dispatcher.index', compact('users', 'user', 'ambulances', 'dispatches', 'dispatches_count', 'monthly_dispatch', 'stand_by', 'on_duty', 'drivers', 'dispatchers', 'locations', 'common_hospital', 'dispatch_percentage'));
     }
 }
