@@ -40,6 +40,7 @@ Route::post('/login/custom', [CustomLoginController::class, 'login'])->name('log
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/home/change-status', [HomeController::class, 'changeMode'])->name('ambulance.status');
     Route::get('/supervisor', [SupervisorRedirectController::class, 'index'])->name('supervisor.index');
     Route::resource('/supervisor/media', SupervisorMediaController::class, ['as' => 'supervisor']);
     Route::resource('/supervisor/users', SupervisorUsersController::class, ['as' => 'supervisor']);

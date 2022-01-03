@@ -14,7 +14,14 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    Hi <em><strong>{{ $driver_name }}</strong> </em>{{ __('You are now logged in') }} into <strong>Dispatch.io</strong>!
+                    <br>
+                    <br>
+                    @if ($status == 0)
+                        Your ambulance is on stand by, once an emergency occurs you will be notified via email.
+                    @else
+                        Your ambulance is on duty, click this <a href="{{ route('ambulance.status')}}">link</a> to change its status to stand by once you have completed dispatch.
+                    @endif
                 </div>
             </div>
         </div>
