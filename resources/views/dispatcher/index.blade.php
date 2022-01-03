@@ -299,7 +299,7 @@
                                     </div>
                                     <div class="panel-body">
                                         <table id="datatable-buttons" class="table table-striped table-bordered">
-                                            <caption><small style="color: #5966f7;">&nbsp;REGISTERED SYSTEM USERS AND THEIR ROLES</small></caption>
+                                            <caption><small style="color: #5966f7;">&nbsp;DISPATCHES MADE AND THEIR DETAILS</small></caption>
                                             <thead>
                                                 <tr>
                                                     <th>Caller Name</th>
