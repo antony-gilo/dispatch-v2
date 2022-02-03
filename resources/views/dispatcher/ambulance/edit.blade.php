@@ -81,16 +81,15 @@
     <div class="form-group">
         <label class="col-sm-2 control-label">Assign Driver</label>
         <div class="col-sm-10">
-            <select class="form-control" name="driver_id">
+            <select class="form-control">
+                <option selected>Assign Driver</option>
                 @foreach ($drivers_array as $driver)
-                    <option disabled selected hidden>
-                        @if ($current_driver = $ambulance->driver)
-                            {{ $current_driver['name'] }}
-                        @else
-                            {{ "Select Driver" }}
-                        @endif
+                    <option value="{{ $driver->id }}">
+                        {{ $driver['name'] }} With Ambulance:
+                            @foreach ($ambulances as $ambulance)
+                                {{$ambulance->reg_no}}
+                            @endforeach
                     </option>
-                    <option value="{{ $driver->id }}"> {{ $driver->name }} </option>
                 @endforeach
             </select>
         </div>

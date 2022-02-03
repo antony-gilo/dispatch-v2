@@ -33,8 +33,9 @@ class SupervisorAmbulanceController extends Controller
     public function create()
     {
         $user = Auth::user();
+        $ambulances = Ambulance::all();
         $drivers_array = User::where('role_id', 3)->get();
-        return view('supervisor.ambulance.create', compact('user', 'drivers_array'));
+        return view('supervisor.ambulance.create', compact('user', 'drivers_array', 'ambulances'));
     }
 
     /**
@@ -85,8 +86,9 @@ class SupervisorAmbulanceController extends Controller
         $user = Auth::user();
         $drivers_array = User::where('role_id', 3)->get();
         $ambulance = Ambulance::findOrFail($id);
+        $ambulance_array = Ambulance::where('status', 0)->get();
 
-        return view('supervisor.ambulance.edit', compact('user', 'drivers_array', 'ambulance'));
+        return view('supervisor.ambulance.edit', compact('user', 'drivers_array', 'ambulance', 'ambulance_array'));
     }
 
     /**

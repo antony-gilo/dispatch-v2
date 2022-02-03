@@ -65,11 +65,15 @@ class User extends Authenticatable
         return $this->role()->where('id', 2)->exists();
     }
 
+    public function is_driver()
+    {
+        return $this->role()->where('id', 3)->exists();
+    }
+
     public function ambulance()
     {
-        $driver = $this->role()->where('id', 3)->exists();
-        if ($driver) {
-            return $driver->hasOne(Ambulance::class);
+        if ($this->is_driver()) {
+            return $this->hasOne(Ambulance::class, 'driver_id');
         }
     }
 }

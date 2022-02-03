@@ -39,8 +39,9 @@ class DispatcherAmbulanceController extends Controller
     {
         //
         $user = Auth::user();
+        $ambulances = Ambulance::all();
         $drivers_array = User::where('role_id', 3)->get();
-        return view('dispatcher.ambulance.create', compact('user', 'drivers_array'));
+        return view('dispatcher.ambulance.create', compact('user', 'drivers_array', 'ambulances'));
     }
 
     /**
@@ -93,8 +94,11 @@ class DispatcherAmbulanceController extends Controller
         $user = Auth::user();
         $drivers_array = User::where('role_id', 3)->get();
         $ambulance = Ambulance::findOrFail($id);
+        $current_driver = $ambulance->driver;
+        $ambulances = Ambulance::all();
+        $ambulance_array = Ambulance::where('status', 0)->get();
 
-        return view('dispatcher.ambulance.edit', compact('user', 'drivers_array', 'ambulance'));
+        return view('dispatcher.ambulance.edit', compact('user', 'drivers_array', 'ambulance', 'current_driver', 'ambulances', 'ambulance_array'));
     }
 
     /**

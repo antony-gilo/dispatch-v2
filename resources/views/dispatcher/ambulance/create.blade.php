@@ -72,16 +72,18 @@
         </div>
     </div>
 
-    <div class="form-group">
+    {{-- <div class="form-group">
         <label class="col-sm-2 control-label">Assign Driver</label>
         <div class="col-sm-10">
             <select class="form-control" name="driver_id">
-                @foreach ($drivers_array as $driver)
-                    <option value="{{ $driver->id }}"> {{ $driver->name }} </option>
+                @foreach ($ambulances as $ambulance)
+                    @if ($ambulance->driver === null)
+                        <option value="{{ $ambulance->driver_id }}"> {{ $ambulance->driver->name }} </option>
+                    @endif
                 @endforeach
             </select>
         </div>
-    </div>
+    </div> --}}
 
     <div class="form-group">
         <label class="col-md-2 control-label"></label>
