@@ -76,7 +76,7 @@
         @csrf
         <div class="col-md-4">
             <input type="hidden" class="form-control" name="_method" value="DELETE">
-            <button type="submit" class="btn btn-danger btn-block waves-effect waves-light">Delete Location</button>
+            {{-- <button type="hidden" class="btn btn-danger btn-block waves-effect waves-light">Delete Location</button> --}}
         </div>
     </div>
     </form>
