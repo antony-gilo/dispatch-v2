@@ -8,7 +8,7 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Ambulance | Dispatch') }}</title>
+        <title>{{ config('app.name', 'St.John | Ambulance Dispatch') }}</title>
 
         <!-- DataTables -->
         <link href="{{ asset('vendor/assets/plugins/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
@@ -56,25 +56,6 @@
                                     <a href="#" data-bs-target="#" class="dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-expanded="true">
                                         <i class="ti-bell"></i> <span class="badge badge-xs badge-danger">@yield('number_notifications')</span>
                                     </a>
-                                    {{-- <ul class="dropdown-menu dropdown-menu-lg">
-                                        <li class="text-center notifi-title">Notification <span class="badge badge-xs badge-success">3</span></li>
-                                        <li class="list-group">
-                                           <!-- list item-->
-                                           <a href="javascript:void(0);" class="list-group-item">
-                                              <div class="media">
-                                                 <div class="media-heading">Your order is placed</div>
-                                                 <p class="m-0">
-                                                   <small>Dummy text of the printing and typesetting industry.</small>
-                                                 </p>
-                                              </div>
-                                           </a>
-
-                                           <!-- last list item -->
-                                            <a href="javascript:void(0);" class="list-group-item">
-                                              <small class="text-primary">See all notifications</small>
-                                            </a>
-                                        </li>
-                                    </ul> --}}
                                 </li>
                                 <li class="hidden-xs">
                                     <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="ti-fullscreen"></i></a>
@@ -195,7 +176,7 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-6 col-lg-3">
+                        <div class="col-sm-6 col-lg-3 m-b-1 mb-md-1">
                             <div class="panel panel-primary text-center">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">Registered Ambulances</h4>
@@ -208,7 +189,7 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-6 col-lg-3">
+                        <div class="col-sm-6 col-lg-3 m-b-1 mb-md-1">
                             <div class="panel panel-primary text-center">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">Number Of Dispatches</h4>
@@ -227,7 +208,7 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-6 col-lg-3">
+                        <div class="col-sm-6 col-lg-3 m-b-1 mb-md-1">
                             <div class="panel panel-primary text-center">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">Registered System Users</h4>
@@ -240,7 +221,7 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-6 col-lg-3 mb-5">
+                        <div class="col-sm-6 col-lg-3 m-b-1 mb-md-1">
                             <div class="panel panel-primary text-center">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">Registered Hospitals</h4>
@@ -252,10 +233,12 @@
                                 </div>
                             </div>
                         </div>
+                        <br>
+                        <br>
 
-                        <div class="row m-t-10">
-                            <div class="col-md-12">
-                                <div class="panel panel-primary">
+                        <div class="row m-t-10 ">
+                            <div class="col-md-12 mt-lg-4">
+                                <div class="panel panel-primary" style="margin-top: 20px;>
                                     <div class="panel-heading">
                                         <h3 class="panel-title">REGISTERED SYSTEM USERS</h3>
                                     </div>
@@ -350,7 +333,7 @@
                 <!-- content -->
 
                 <footer class="footer">
-                    2021 © Dispatch.io
+                    2021 © St.John | Ambulance Dispatch
                 </footer>
 
             </div>

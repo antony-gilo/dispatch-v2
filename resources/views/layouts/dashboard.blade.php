@@ -8,7 +8,7 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Ambulance | Dispatch') }}</title>
+        <title>{{ config('app.name', 'St.John | Ambulance Dispatch') }}</title>
 
         <link rel="shortcut icon" href="{{ asset('vendor/assets/images/favicon.ico') }}">
 
@@ -227,7 +227,7 @@
                 <!-- content -->
 
                 <footer class="footer">
-                    2021 © Dispatch.io
+                    2021 © St.John | Ambulance Dispatch
                 </footer>
 
             </div>

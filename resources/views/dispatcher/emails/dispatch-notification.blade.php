@@ -3,7 +3,7 @@
 <head>
 <meta name="viewport" content="width=device-width" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Dispatch Email Alert</title>
+<title>St.John Ambulance Dispatch Email Alert</title>
 {{-- <link href="css/styles.css" media="all" rel="stylesheet" type="text/css" /> --}}
 <link href="css/app.css" media="all" rel="stylesheet" type="text/css" />
 
@@ -320,7 +320,7 @@ a {
 								</tr>
 								<tr>
 									<td class="content-block">
-										Please rush the victim to <strong>{{$preferred_hospital}}</strong>, and check your ambulance status in the portal as STAND BY AFTER.
+										Please rush the victim to <strong>{{$preferred_hospital}}</strong>, and check your ambulance status in the portal as STAND BY afterwards.
 									</td>
 								</tr>
 								<tr>
@@ -330,7 +330,7 @@ a {
 								</tr>
 								<tr>
 									<td class="content-block">
-										no-reply@dispatch.io
+										[no-reply]ST. JOHN AMBULANCE DISPATCH
 									</td>
 								</tr>
 							</table>
@@ -340,7 +340,7 @@ a {
 				<div class="footer">
 					<table width="100%">
 						<tr>
-							<td class="aligncenter content-block"><a href="{{ route('dispatcher.index') }}">Go Back</a> to portal.</td>
+							<td class="aligncenter content-block"><a href="http://dispatch.example/dispatcher">Go Back</a> to portal.</td>
 						</tr>
 					</table>
 				</div></div>
