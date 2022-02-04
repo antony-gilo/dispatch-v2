@@ -131,12 +131,13 @@ class SupervisorAmbulanceController extends Controller
     {
         $ambulance = Ambulance::findOrFail($id);
 
-        if (unlink(public_path() . $ambulance->photo->path)) {
+        try {
+            unlink(public_path() . $ambulance->photo->path);
             $ambulance->delete();
             Session::flash('ambulance.delete', 'The User: ' . $ambulance->reg_no . ' has been deleted successfully!');
 
             return redirect()->route('supervisor.ambulance.index');
-        } else {
+        } catch (\Throwable $th) {
             $ambulance->delete();
             Session::flash('ambulance.delete', 'The User: ' . $ambulance->reg_no . ' has been deleted successfully!');
 
