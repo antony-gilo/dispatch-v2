@@ -340,7 +340,7 @@ a {
 				<div class="footer">
 					<table width="100%">
 						<tr>
-							<td class="aligncenter content-block"><a href="http://dispatch.example/">Go Back</a> to portal.</td>
+							{{-- <td class="aligncenter content-block"><a href="http://dispatch.example/">Go Back</a> to portal.</td> --}}
 						</tr>
 					</table>
 				</div></div>

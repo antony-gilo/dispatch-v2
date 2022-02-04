@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    Hi <em><strong>{{ $driver_name }}</strong> </em>{{ __('You are now logged in') }} into <strong>Dispatch.io</strong>!
+                    Hi <em><strong>{{ $driver_name }}</strong> </em>{{ __('You are now logged in') }} into <strong>St. John Ambulance Portal</strong>!
                     <br>
                     <br>
                     @if ($status == 0)
